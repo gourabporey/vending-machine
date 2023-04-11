@@ -1,7 +1,13 @@
 const determineOptimumNoOfCoins = function(amount) {
-  const twoRupeeCoins = Math.floor(amount / 2);
-  const amountLeft = amount % 2;
-  return twoRupeeCoins + amountLeft;
+  let amountLeft = amount;
+
+  const fiveRupeeCoins = Math.floor(amountLeft / 5);
+  amountLeft = amountLeft % 5;
+
+  const twoRupeeCoins = Math.floor(amountLeft / 2);
+  amountLeft = amountLeft % 2;
+
+  return fiveRupeeCoins + twoRupeeCoins + amountLeft;
 }
 
 const dispenseCoins = function(amount) {
