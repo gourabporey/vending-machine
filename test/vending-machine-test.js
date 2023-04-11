@@ -12,3 +12,4 @@ const runTestForVendingMachine = function() {
 }
 
 runTestForVendingMachine();
+testing.displayTestSummary();
