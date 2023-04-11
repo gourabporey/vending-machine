@@ -1,2 +1,5 @@
-const value = 1;
-exports.value = value;
+const dispenseCoins = function(amount) {
+  return amount;
+}
+
+exports.dispenseCoins = dispenseCoins;
