@@ -5,12 +5,11 @@ const addElements = function (numbers) {
   return numbers[0] + addElements(numbers.slice(1));
 }
 
-const determineOptimumNoOfCoins = function(amount) {
+const determineOptimumNoOfCoins = function(amount, denomination) {
   let amountLeft = amount;
-  const denomination = [10, 5, 2, 1];
   const noOfCoins = [];
 
-  for (let i = 0; i < denomination.length; i++) {
+  for (let i = denomination.length - 1; i >= 0; i--) {
     noOfCoins.push(Math.floor(amountLeft / denomination[i]));
     amountLeft = amountLeft % denomination[i];
   }
@@ -18,8 +17,8 @@ const determineOptimumNoOfCoins = function(amount) {
   return addElements(noOfCoins);
 }
 
-const dispenseCoins = function(amount) {
-  return determineOptimumNoOfCoins(amount);
+const dispenseCoins = function(amount, denomination) {
+  return determineOptimumNoOfCoins(amount, denomination);
 }
 
 exports.dispenseCoins = dispenseCoins;
