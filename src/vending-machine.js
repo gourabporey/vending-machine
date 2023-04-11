@@ -1,16 +1,21 @@
+const addElements = function (numbers) {
+  if (numbers.length === 0) {
+    return 0;
+  }
+  return numbers[0] + addElements(numbers.slice(1));
+}
+
 const determineOptimumNoOfCoins = function(amount) {
   let amountLeft = amount;
+  const denomination = [10, 5, 2, 1];
+  const noOfCoins = [];
 
-  const tenRupeeCoins = Math.floor(amountLeft / 10);
-  amountLeft = amountLeft % 10;
+  for (let i = 0; i < denomination.length; i++) {
+    noOfCoins.push(Math.floor(amountLeft / denomination[i]));
+    amountLeft = amountLeft % denomination[i];
+  }
 
-  const fiveRupeeCoins = Math.floor(amountLeft / 5);
-  amountLeft = amountLeft % 5;
-
-  const twoRupeeCoins = Math.floor(amountLeft / 2);
-  amountLeft = amountLeft % 2;
-
-  return tenRupeeCoins + fiveRupeeCoins + twoRupeeCoins + amountLeft;
+  return addElements(noOfCoins);
 }
 
 const dispenseCoins = function(amount) {
