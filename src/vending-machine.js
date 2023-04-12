@@ -1,3 +1,6 @@
+const maxSort = require("./max-sort.js");
+const sort = maxSort.sort;
+
 const addElements = function (numbers) {
   if (numbers.length === 0) {
     return 0;
@@ -18,7 +21,7 @@ const determineOptimumNoOfCoins = function(amount, denomination) {
 }
 
 const dispenseCoins = function(amount, denomination) {
-  return determineOptimumNoOfCoins(amount, denomination);
+  return determineOptimumNoOfCoins(amount, sort(denomination));
 }
 
 exports.dispenseCoins = dispenseCoins;
