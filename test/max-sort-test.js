@@ -6,13 +6,41 @@ const sort = maxSort.sort;
 
 const runTestsForMaxSort = function() {
   testing.printHeadline("Testing for MaxSort");
-  assertArrayEqual(sort([]), [], "Should give empty array for array of no element");
-  assertArrayEqual(sort([1]), [1], "Should give same array for array of one element");
-  assertArrayEqual(sort([1, 2]), [1, 2], "Should give a sorted array for array of two elements");
-  assertArrayEqual(sort([2, 2, 2]), [2, 2, 2], "Should give same array for array of same elements");
-  assertArrayEqual(sort([1, 3, 2, 5, 4]), [1, 2, 3, 4, 5], "Should give a sorted array for array of multiple elements");
-  assertArrayEqual(sort([1, 3, 2, 2, 4]), [1, 2, 2, 3, 4], "Should give a sorted array for array with repeated elements");
-  assertArrayEqual(sort([1, -3, -2, 2, 4]), [-3, -2, 1, 2, 4], "Should give a sorted array for array with mix of +ve & -ve elements");
+
+  let message = "Should give empty array for array of no element";
+  let actual = sort([]);
+  let expected = [];
+  assertArrayEqual(actual, expected, message);
+
+  message = "Should give same array for array of one element";
+  actual = sort([1]);
+  expected = [1];
+  assertArrayEqual(actual, expected, message);
+
+  message = "Should give a sorted array for array of two elements";
+  actual = sort([1, 2]);
+  expected = [1, 2];
+  assertArrayEqual(actual, expected, message);
+
+  message = "Should give same array for array of same elements";
+  actual = sort([2, 2, 2]);
+  expected = [2, 2, 2];
+  assertArrayEqual(actual, expected, message);
+
+  message = "Should give a sorted array for array of multiple elements";
+  actual = sort([1, 3, 2, 5, 4]);
+  expected = [1, 2, 3, 4, 5];
+  assertArrayEqual(actual, expected, message);
+
+  message = "Should give a sorted array for array with repeated elements";
+  actual = sort([1, 3, 2, 2, 4]);
+  expected = [1, 2, 2, 3, 4];
+  assertArrayEqual(actual, expected, message);
+
+  message = "Should give a sorted array for array with mix of +ve & -ve elements";
+  actual = sort([1, -3, -2, 2, 4]);
+  expected = [-3, -2, 1, 2, 4];
+  assertArrayEqual(actual, expected, message);
 }
 
 runTestsForMaxSort();
