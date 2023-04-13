@@ -2,7 +2,10 @@ const testing = require('../lib/testing.js');
 const vendingMachine = require('../src/vending-machine.js');
 
 const assertEqual = testing.assertEqual;
+const assertArrayEqual = testing.assertArrayEqual;
+const assertObjectsEqual = testing.assertObjectsEqual;
 const dispenseCoins = vendingMachine.dispenseCoins;
+const dispenseCoinsByDenomination = vendingMachine.dispenseCoinsByDenomination;
 
 const runTestForVendingMachine = function() {
   testing.printHeadline("Testing for vending machine");
@@ -19,5 +22,15 @@ const runTestForVendingMachine = function() {
   assertEqual(dispenseCoins(18, [1,7,10,2]), 3, "Should give 1 coin of 10 rupee, 1 coin of 7 rupee, 1 coin of 1 rupee for amount of Rs.18 and denomination of 1, 7, 10, 2");
 }
 
+const runTestForDispenseCoinsByDenomination = function() {
+  testing.printHeadline("Testing for Dispense coins by denomination");
+  assertObjectsEqual(dispenseCoinsByDenomination(0, [1]), {1: 0}, "Should give {1:0} for Rs.1 & denomination is [1]");
+  assertObjectsEqual(dispenseCoinsByDenomination(1, [1]), {1: 1}, "Should give {1:1} for Rs.1 & denomination is [1]");
+  assertObjectsEqual(dispenseCoinsByDenomination(2, [1]), {1: 2}, "Should give {1:2} for Rs.2 & denomination is [1]");
+  assertObjectsEqual(dispenseCoinsByDenomination(3, [1, 2]), {1: 1, 2: 1}, "Should give {1:2,2:1} for Rs.3 & denomination is [1, 2]");
+  assertObjectsEqual(dispenseCoinsByDenomination(5, [1, 2, 5]), {1: 0, 2: 0, 5: 1}, "Should give {1:0,2:0,5:1} for Rs.5 & denomination is [1, 2, 5]");
+}
+
 runTestForVendingMachine();
+runTestForDispenseCoinsByDenomination();
 testing.displayTestSummary();
