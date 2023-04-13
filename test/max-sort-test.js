@@ -1,14 +1,15 @@
 const testing = require('../lib/testing.js');
-const maxSort = require('../src/max-sort.js');
+const maxSort = require('../lib/sort-utils/max-sort.js');
 
 const assertArrayEqual = testing.assertArrayEqual;
+const sort = maxSort.sort;
 
-const runTestForMaxSort = function() {
+const runTestsForMaxSort = function() {
   testing.printHeadline("Testing for MaxSort");
-  assertArrayEqual(maxSort.sort([1]), [1], "Shoulde give [1] for input [1]");
-  assertArrayEqual(maxSort.sort([1, 2]), [1, 2], "Shoulde give [1, 2] for input [1, 2]");
-  assertArrayEqual(maxSort.sort([1, 3, 2]), [1, 2, 3], "Shoulde give [1, 2, 3] for input [1, 3, 2]");
+  assertArrayEqual(sort([1]), [1], "Should give [1] for input [1]");
+  assertArrayEqual(sort([1, 2]), [1, 2], "Should give [1, 2] for input [1, 2]");
+  assertArrayEqual(sort([1, 3, 2]), [1, 2, 3], "Should give [1, 2, 3] for input [1, 3, 2]");
 }
 
-runTestForMaxSort();
+runTestsForMaxSort();
 testing.displayTestSummary();
