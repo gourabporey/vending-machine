@@ -1,73 +1,98 @@
 const testing = require('../lib/testing.js');
 const vendingMachine = require('../src/vending-machine.js');
 
+const printHeadline = testing.printHeadline;
 const assertEqual = testing.assertEqual;
 const assertArrayEqual = testing.assertArrayEqual;
 const assertObjectsEqual = testing.assertObjectsEqual;
 const countCoins = vendingMachine.countCoins;
 const countCoinsByDenomination = vendingMachine.countCoinsByDenomination;
 
-const runTestForVendingMachine = function() {
-  testing.printHeadline("Testing for vending machine");
+const testForDispenseCoins = function() {
+  const it = function(testName, testData) {
+    assertEqual(testData.actual, testData.expected, testName);
+  }
 
-  let message = "Should give nothing for no denomination provided";
-  let actual = countCoins(1, []);
-  let expected = 0;
-  assertEqual(actual, expected, message);
+  printHeadline("Testing for vending machine");
 
-  message = "Should give nothing for no amount provided";
-  actual = countCoins(0, [1]);
-  expected = 0;
-  assertEqual(actual, expected, message);
+  it("Should give nothing for no denomination", {
+    actual: countCoins(1, []),
+    expected: 0,
+  });
 
-  message = "Should give same number of coins for any amount and denomination of 1";
-  actual = countCoins(1, [1]);
-  expected = 1;
-  assertEqual(actual, expected, message);
+  it("Should give nothing for no amount provided", {
+    actual: countCoins(0, [1]),
+    expected: 0,
+  });
 
-  message = "Should give 1 coin of 2 rupee for amount of Rs.2 and denomination of 1, 2 ";
-  actual = countCoins(2, [1,2]);
-  expected = 1;
-  assertEqual(actual, expected, message);
-  message = "Should give 1 coin of 5 rupee for amount of Rs.5 and denomination of 1, 2, 5";
-  actual = countCoins(5, [1,2,5]);
-  expected = 1;
-  assertEqual(actual, expected, message);
-  message = "Should give 1 coin of 10 rupee for amount of Rs.10 and denomination of 2, 5, 10";
-  actual = countCoins(10, [2,5,10]);
-  expected = 1;
-  assertEqual(actual, expected, message);
-  message = "Should give 1 coin of 10 rupee, 1 coin each of 1 and 2 rupee for amount of Rs.13 and denomination of 1, 2, 5, 10";
-  actual = countCoins(13, [1,2,5,10]);
-  expected = 3;
-  assertEqual(actual, expected, message);
-  message = "Should give 3 coins of 10 rupee, 1 coin of 5 rupee for amount of Rs.35 and denomination of 1, 2, 5, 10";
-  actual = countCoins(35, [1,2,5,10]);
-  expected = 4;
-  assertEqual(actual, expected, message);
-  message = "Should give 1 coin of 7 rupee, 1 coin of 4 rupee, 2 coin of 1 rupee for amount of Rs.13 and denomination of 1, 4, 7";
-  actual = countCoins(13, [1,4,7]);
-  expected = 4;
-  assertEqual(actual, expected, message);
-  message = "Should give 1 coin of 7 rupee, 3 coins of 2 rupee for amount of Rs.13 and denomination of 1, 7, 2";
-  actual = countCoins(13, [1,7,2]);
-  expected = 4;
-  assertEqual(actual, expected, message);
-  message = "Should give 1 coin of 10 rupee, 1 coin of 7 rupee, 1 coin of 1 rupee for amount of Rs.18 and denomination of 1, 7, 10, 2";
-  actual = countCoins(18, [1,7,10,2]);
-  expected = 3;
-  assertEqual(actual, expected, message);
+  it("Should give same number of coins for any amount and denomination of 1", {
+    actual: countCoins(6, [1]),
+    expected: 6,
+  });
+
+  it("Should give one coin for amount to be same as any denomination", {
+    actual: countCoins(2, [1,2]),
+    expected: 1,
+  });
+
+  it("Should give number of denominations when amount is sum of all the denomination", {
+    actual: countCoins(18, [1,2,5,10]),
+    expected: 4,
+  });
+
+  it("Should give total coins when denominations are provided in ascending order", {
+    actual: countCoins(35, [1,2,5,10]),
+    expected: 4,
+  });
+
+  it("Should give total coins when denominations are provided in descending order", {
+    actual: countCoins(35, [10,5,2,1]),
+    expected: 4,
+  });
+
+  it("Should give total coins when denominations are provided in random order", {
+    actual: countCoins(13, [1,7,2]),
+    expected: 4,
+  });
 }
 
-const runTestForDispenseCoinsByDenomination = function() {
-  testing.printHeadline("Testing for Dispense coins by denomination");
-  assertObjectsEqual(countCoinsByDenomination(0, [1]), {1: 0}, "Should give {1:0} for Rs.1 & denomination is [1]");
-  assertObjectsEqual(countCoinsByDenomination(1, [1]), {1: 1}, "Should give {1:1} for Rs.1 & denomination is [1]");
-  assertObjectsEqual(countCoinsByDenomination(2, [1]), {1: 2}, "Should give {1:2} for Rs.2 & denomination is [1]");
-  assertObjectsEqual(countCoinsByDenomination(3, [1, 2]), {1: 1, 2: 1}, "Should give {1:2,2:1} for Rs.3 & denomination is [1, 2]");
-  assertObjectsEqual(countCoinsByDenomination(5, [1, 2, 5]), {1: 0, 2: 0, 5: 1}, "Should give {1:0,2:0,5:1} for Rs.5 & denomination is [1, 2, 5]");
+const testForDispenseCoinsByDenomination = function() {
+  const it = function(testName, testData) {
+    assertObjectsEqual(testData.actual, testData.expected, testName);
+  }
+
+  printHeadline("Testing for Dispense coins by denomination");
+
+  it("Should give {1:0} for Rs.1 & denomination is [1]", {
+    actual: countCoinsByDenomination(0, [1]),
+    expected: {1: 0},
+  });
+
+  it("Should give {1:1} for Rs.1 & denomination is [1]", {
+    actual: countCoinsByDenomination(1, [1]),
+    expected: {1: 1},
+  });
+
+  it("Should give {1:2} for Rs.2 & denomination is [1]", {
+    actual: countCoinsByDenomination(2, [1]),
+    expected: {1: 2},
+  });
+
+  it("Should give {1:2,2:1} for Rs.3 & denomination is [1, 2]", {
+    actual: countCoinsByDenomination(3, [1, 2]),
+    expected: {1: 1, 2: 1},
+  });
+
+  it("Should give {1:0,2:0,5:1} for Rs.5 & denomination is [1, 2, 5]", {
+    actual: countCoinsByDenomination(5, [1, 2, 5]),
+    expected: {1: 0, 2: 0, 5: 1},
+  });
 }
 
-runTestForVendingMachine();
-runTestForDispenseCoinsByDenomination();
-testing.displayTestSummary();
+const testVendingMachine = function() {
+  testForDispenseCoins();
+  testForDispenseCoinsByDenomination();
+  testing.displayTestSummary();
+}
+
+testVendingMachine();
