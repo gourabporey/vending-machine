@@ -4,7 +4,7 @@ const maxSort = require("../lib/sort-utils/max-sort.js");
 const add = math.add;
 const sort = maxSort.sort;
 
-const dispenseCoinsByDenomination = function(amount, denomination) {
+const countCoinsByDenomination = function(amount, denomination) {
   let amountLeft = amount;
   const noOfCoins = {};
 
@@ -16,9 +16,9 @@ const dispenseCoinsByDenomination = function(amount, denomination) {
   return noOfCoins;
 }
 
-const dispenseCoins = function(amount, denomination) {
-  return add(dispenseCoinsByDenomination(amount, sort(denomination)));
+const countCoins = function(amount, denomination) {
+  return add(countCoinsByDenomination(amount, sort(denomination)));
 }
 
-exports.dispenseCoins = dispenseCoins;
-exports.dispenseCoinsByDenomination = dispenseCoinsByDenomination;
+exports.countCoins = countCoins;
+exports.countCoinsByDenomination = countCoinsByDenomination;
